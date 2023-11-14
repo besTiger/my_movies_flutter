@@ -1,43 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_movies_flutter/providers/movies_provider.dart';
 import 'package:my_movies_flutter/router/routes.dart';
+import 'package:my_movies_flutter/theme/theme_model.dart';
 import 'package:provider/provider.dart';
 
-
 void main() {
-  runApp(const AppState());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(const AppState());
+  });
 }
 
 class AppState extends StatelessWidget {
-
   const AppState({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => MoviesProvider(), lazy: false)
+        ChangeNotifierProvider(create: (_) => MoviesProvider(), lazy: false),
       ],
-      child: const MyApp()
+      child: const MyApp(),
     );
   }
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Movies',
-      initialRoute: 'home',
-      routes: Routes.routes,
-      theme: ThemeData.light().copyWith(
-        appBarTheme: const AppBarTheme(
-          color: Colors.black87
-        )
-      )
+    return ChangeNotifierProvider(
+      create: (_) => ThemeModel(),
+      child: Consumer(builder: (context, ThemeModel themeNotifier, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: themeNotifier.isDark ? ThemeData.dark() : ThemeData.light(),
+          title: 'Movies',
+          initialRoute: 'home',
+          routes: Routes.routes,
+        );
+      }),
     );
   }
 }
