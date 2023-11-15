@@ -16,26 +16,43 @@ class HomePage extends StatelessWidget {
     return Consumer(builder: (context, ThemeModel themeNotifier, child) {
       return SafeArea(
           child: Scaffold(
-        appBar: AppBar(title: const Text('Movies'), elevation: 0, actions: [
-          IconButton(
-            onPressed: () {
-              themeNotifier.isDark = !themeNotifier.isDark;
-            },
-            icon: Icon(
-              themeNotifier.isDark ? Icons.nightlight_round : Icons.wb_sunny,
-              color: themeNotifier.isDark ? Colors.white : Colors.black,
-              size: 28,
+        appBar: AppBar(
+            backgroundColor: Colors.white30,
+            title: const Text(
+              'Movies',
+              style: TextStyle(
+                fontSize: 24.0,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-
-          Container(
-            margin: const EdgeInsets.only(right: 4),
-            child: IconButton(
-                onPressed: () => showSearch(
-                    context: context, delegate: MovieSearchDelegate(context)),
-                icon: const Icon(Icons.search_outlined)),
-          )
-        ]),
+            elevation: 0,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  themeNotifier.isDark = !themeNotifier.isDark;
+                },
+                icon: Icon(
+                  themeNotifier.isDark
+                      ? Icons.nightlight_round
+                      : Icons.wb_sunny,
+                  color: themeNotifier.isDark ? Colors.white : Colors.black,
+                  size: 28,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(right: 4),
+                child: IconButton(
+                    onPressed: () => showSearch(
+                        context: context,
+                        delegate: MovieSearchDelegate(context)),
+                    icon: const Icon(
+                      Icons.search_outlined,
+                      size: 28,
+                      color: Colors.black,
+                    )),
+              )
+            ]),
         body: SingleChildScrollView(
           child: Column(
             children: [

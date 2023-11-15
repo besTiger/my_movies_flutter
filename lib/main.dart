@@ -40,8 +40,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: themeNotifier.isDark ? ThemeData.dark() : ThemeData.light(),
-          title: 'Movies',
-          initialRoute: 'home',
+          initialRoute: 'bottom',
           routes: Routes.routes,
         );
       }),
